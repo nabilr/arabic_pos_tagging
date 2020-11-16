@@ -3,10 +3,14 @@ Arabic Parts of Speech Taging
 
 ## Down load Arabic Corpus from https://catalog.ldc.upenn.edu/LDC2010T13
 Name of the file download atb1_v4_1_LDC2010T13.tgz
+
 Copy th extracted folder atb1_v4_1 into flder data/
+
 Follder used to train the model: atb1_v4_1/data/pos/after/
 
+
 ## PATB file format 
+```
  INPUT STRING: الولايات
      IS_TRANS: AlwlAyAt
       COMMENT: []
@@ -16,7 +20,7 @@ Follder used to train the model: atb1_v4_1/data/pos/after/
     VOCALIZED: Al+wilAy+At+u
           POS: DET+NOUN+NSUFF_FEM_PL+CASE_DEF_NOM
         GLOSS: the + states/provinces + [fem.pl.] + [def.nom.]
-
+```
 Every word is described in 9 lines.
 
 IS_TRANS:   Arabic pronounciation
