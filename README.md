@@ -36,9 +36,14 @@ Total number of sentence to train: 5253
 ```
 ### Construct sentence structure.
 
-Read all the files and construct a sentance structure and associated word information from PATB file
+Read all the files and construct a sentence structure and associated word information from PATB file
 
 
-### Run
+### Extract morphological information using camel tool
+
+camel tool: https://github.com/CAMeL-Lab/camel_tools
+
+
+
 
 

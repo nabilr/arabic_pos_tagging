@@ -78,7 +78,7 @@ analyzer = Analyzer(db)
 
 training_set = []
 
-for sentence in sentences[0:10]:
+for sentence in sentences:
     s = []
     for word in sentence:
         
@@ -106,7 +106,7 @@ for sentence in sentences[0:10]:
 print(len(sentences), len(training_set))
 
 
-with open('data/preprocess.json', 'w') as outfile:
+with open('data/preprocess_5253.json', 'w') as outfile:
     json.dump(training_set, outfile)
 
 # for d in analyses:
