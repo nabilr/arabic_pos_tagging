@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+.DS_Store
 *$py.class
 
 # C extensions
@@ -20,6 +21,7 @@ parts/
 sdist/
 var/
 wheels/
+data/*
 pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
