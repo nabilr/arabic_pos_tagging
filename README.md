@@ -78,4 +78,17 @@ diac:الوِلاياتُ lex:وِلايات_1 caphi:2_a_l_w_i_l_aa_y_aa_t_u glo
 
 
 
+Evaluation.
+
+```
+Tag         pos   gen   num   cas   mod   asp     per   vox   stt   prc0  prc1  prc2  prc3  enc0  form_gen  form_num   stemcat
+CamelParser 96.78 99.41 99.43 92.68 99.13 99.27   99.23 99.08 97.54 99.67 99.63 99.59 99.90 99.61 -         -           -
+LSTM        96.00 99.36 99.21 87.30 100   99.78   99.99 100   96.88 99.81 99.23 99.23 99.19 99.10 99.34     99.34       96.23
+```
+
+
+
+
+
+
 
