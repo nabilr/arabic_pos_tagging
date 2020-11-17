@@ -15,17 +15,20 @@ TDIM = 20
 tags = ['pos', 'prc3', 'prc2', 'prc1', 'prc0', 'per', 'asp', 'vox', 'mod', 'stt', 'cas', 'enc0',
 'form_gen', 'form_num',  'gen', 'num', 'stemcat']
 
-tagSet = 'pos'
+tagSet = sys.argv[1]
 
 
-def extract_word_hidden_features(coded_word, cf_init):    
+def extract_word_hidden_features(coded_word, cf_init, cb_init):    
     char_embs = [C[c2i[c]] for c in i2w[coded_word]]
     # print('aaaa',len(char_embs[0].value()))
     fw_exps = cf_init.transduce(char_embs)
     bw_exps = cb_init.transduce(reversed(char_embs))
     char_emb = dy.concatenate([fw_exps[-1], bw_exps[-1]])
+
+    
     word_emb = W[coded_word]
     wemb = dy.concatenate([word_emb, char_emb])
+    # print(len(wemb.value()), )
     return wemb
 
 fd = open('data/preprocess_5253.json')
@@ -83,7 +86,7 @@ W = m.add_lookup_parameters((Vsize, WDIM))
 C = m.add_lookup_parameters((Csize, CDIM))
 # T = m.add_lookup_parameters((Tsize, TDIM))
 
-pW1 = m.add_parameters((HID,WDIM))
+pW1 = m.add_parameters((HID,WDIM+10))
 pb1 = m.add_parameters(HID)
 
 pW2 = m.add_parameters((Tsize,HID))
@@ -91,11 +94,11 @@ pb2 = m.add_parameters(Tsize)
 
 
 n_layer = 2
-fwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 2, m)
-bwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 2, m)
+fwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 4, m)
+bwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 4, m)
 
-cfwdRNN = dy.VanillaLSTMBuilder(n_layer, CDIM, 2, m)
-cbwdRNN = dy.VanillaLSTMBuilder(n_layer, CDIM, 2, m)
+cfwdRNN = dy.VanillaLSTMBuilder(n_layer, CDIM, 5, m)
+cbwdRNN = dy.VanillaLSTMBuilder(n_layer, CDIM, 5, m)
 
 f_init = fwdRNN.initial_state()
 b_init = bwdRNN.initial_state()
@@ -106,7 +109,7 @@ cb_init = cbwdRNN.initial_state()
 total_sentences = len(coded_sents)
 
 
-index = int(total_sentences * 0.80)
+index = int(total_sentences * 0.10)
 test_sentences = coded_sents[0:index]
 training_sentences =  coded_sents[index:]
 
@@ -118,12 +121,10 @@ for i in range(1):
         cb_init = cbwdRNN.initial_state()
         for w_c, t_c in code_sent:
             
-            wemb = extract_word_hidden_features(w_c, cf_init)
-            y = pW2*(dy.tanh(pW1 * W[w_c] + pb1))
+            wemb = extract_word_hidden_features(w_c, cf_init, cb_init)
+            y = pW2*(dy.tanh(pW1 * wemb + pb1)) + pb2
+            # y = dy.tanh(pW1 * W[w_c] + pb1
             # y = pW2 * (pW1 * W[w_c] + pb1) + pb2
-
-            
-            # print(y)
             # print(dy.softmax(y).value())
             # print(t_c, Tsize)
             loss = dy.pickneglogsoftmax(y, t_c)
@@ -143,9 +144,14 @@ total = 0
 # F1 = 2 * precision * recall/ (precision + recall)
 
 for each_sent in test_sentences:
+    dy.renew_cg()
+    cf_init = cfwdRNN.initial_state()
+    cb_init = cbwdRNN.initial_state()
+
     for w_c, t_c in each_sent:
 
-        y = pW2*(dy.tanh(pW1 * W[w_c] + pb1))
+        wemb = extract_word_hidden_features(w_c, cf_init, cb_init)
+        y = pW2*(dy.tanh(pW1 * wemb + pb1)) + pb2
 
         predict_c = np.argmax(y.value())
 
@@ -160,7 +166,7 @@ for each_sent in test_sentences:
         # print(w_c, t_c, )
 
 
-print('accuracy', TP/total)
+print('Tag', tagSet, 'accuracy', TP/total)
 # print(w2i)
 
 
