@@ -8,7 +8,8 @@ import random
 
 
 HID = 10
-WDIM = 200
+WDIM = 200 
+# WDIM = 1000
 CDIM = 10
 TDIM = 20
 
@@ -51,7 +52,7 @@ for each_sent in training_set:
         for c in word:
             c2i[c]
 
-
+print('Vacabulary Size:', len(w2i))
 i2w = {i:w for w,i in w2i.items()}
 i2t = {i:w for w,i in t2i.items()}
 i2c = {i:w for w,i in c2i.items()}
@@ -77,7 +78,7 @@ for each_sent in training_set:
 Vsize = len(w2i)
 Tsize = len(t2i)
 Csize = len(c2i)
-
+# WDIM = Vsize
 
 m = dy.ParameterCollection()
 trainer = dy.AdamTrainer(m)
@@ -87,6 +88,9 @@ C = m.add_lookup_parameters((Csize, CDIM))
 # T = m.add_lookup_parameters((Tsize, TDIM))
 
 pW1 = m.add_parameters((HID,WDIM+10))
+
+# pW1 = m.add_parameters((HID,WDIM))
+# pW1 = m.add_parameters((HID,WDIM))
 pb1 = m.add_parameters(HID)
 
 pW2 = m.add_parameters((Tsize,HID))
@@ -94,14 +98,14 @@ pb2 = m.add_parameters(Tsize)
 
 
 n_layer = 2
-fwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 4, m)
-bwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 4, m)
+# fwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 4, m)
+# bwdRNN = dy.VanillaLSTMBuilder(n_layer, WDIM, 4, m)
 
 cfwdRNN = dy.VanillaLSTMBuilder(n_layer, CDIM, 5, m)
 cbwdRNN = dy.VanillaLSTMBuilder(n_layer, CDIM, 5, m)
 
-f_init = fwdRNN.initial_state()
-b_init = bwdRNN.initial_state()
+# f_init = fwdRNN.initial_state()
+# b_init = bwdRNN.initial_state()
 
 cf_init = cfwdRNN.initial_state()
 cb_init = cbwdRNN.initial_state()
@@ -123,6 +127,7 @@ for i in range(1):
             
             wemb = extract_word_hidden_features(w_c, cf_init, cb_init)
             y = pW2*(dy.tanh(pW1 * wemb + pb1)) + pb2
+            # y = pW2 * (pW1 * W[w_c] + pb1) + pb2
             # y = dy.tanh(pW1 * W[w_c] + pb1
             # y = pW2 * (pW1 * W[w_c] + pb1) + pb2
             # print(dy.softmax(y).value())
@@ -151,6 +156,7 @@ for each_sent in test_sentences:
     for w_c, t_c in each_sent:
 
         wemb = extract_word_hidden_features(w_c, cf_init, cb_init)
+        # y = pW2 * (pW1 * W[w_c] + pb1) + pb2
         y = pW2*(dy.tanh(pW1 * wemb + pb1)) + pb2
 
         predict_c = np.argmax(y.value())
