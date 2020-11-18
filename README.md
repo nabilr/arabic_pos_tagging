@@ -82,14 +82,32 @@ diac:الوِلاياتُ lex:وِلايات_1 caphi:2_a_l_w_i_l_aa_y_aa_t_u glo
 Evaluation.
 
 ```
-Tag             pos   gen   num   cas   mod   asp     per   vox   stt   prc0  prc1  prc2  prc3  enc0    Avg)
+Tag             pos   gen   num   cas   mod   asp     per   vox   stt   prc0  prc1  prc2  prc3  enc0    Avg
 JoinPrediction  97.21 99.50 99.59 94.76 99.41 99.44   99.47 99.25 98.24 99.71 99.81 99.73 99.96 99.71   98.99
 CamelParser     96.78 99.41 99.43 92.68 99.13 99.27   99.23 99.08 97.54 99.67 99.63 99.59 99.90 99.61   98.64
 LSTM            96.00 99.36 99.21 87.30 100   99.78   99.99 100   96.88 99.81 99.23 99.23 99.19 99.10   98.22
 NO-LSTM         95.69 98.62 98.80 86.42 100   99.78   99.99 100   95.05 99.11 99.12 99.12 99.12 99.12   97.85
+bag-of-word     95.67 98.54 98.77 85.71 100   99.79   99.99 100   94.98 98.10 99.13 99.13 99.13 99.13   97.719  
 
 ```
 
+Tag pos accuracy 0.9567236375362786
+Tag prc3 accuracy 0.9912931312479846
+Tag prc2 accuracy 0.9912931312479846
+Tag prc1 accuracy 0.9912931312479846
+Tag prc0 accuracy 0.9809738793937439
+Tag per accuracy 0.999935504675911
+Tag asp accuracy 0.9978716543050629
+Tag vox accuracy 1.0
+Tag mod accuracy 1.0
+Tag stt accuracy 0.9498226378587552
+Tag cas accuracy 0.8571428571428571
+Tag enc0 accuracy 0.9912931312479846
+Tag form_gen accuracy 0.9869719445340213
+Tag form_num accuracy 0.9901322154143825
+Tag gen accuracy 0.9854885520799742
+Tag num accuracy 0.9876813930990003
+Tag stemcat accuracy 0.9568526281844566
 ##The result shows
 
 ### Case category
