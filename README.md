@@ -1,5 +1,5 @@
-# arabic_pos_tagging
-Arabic Parts Of Speech Tagging
+
+# Arabic Parts Of Speech Tagging
 
 ## Download Arabic Corpus from https://catalog.ldc.upenn.edu/LDC2010T13
 - Name of the file downloaded: atb1_v4_1_LDC2010T13.tgz
@@ -21,18 +21,19 @@ Arabic Parts Of Speech Tagging
 ```
 Every word is described in 9 lines.
 ```
-IS_TRANS:   Arabic pronounciation
-INDEX:      Number after P show, sentance index and number after w indicates word position
-OFFSETS:    It idicates the length and word index position in the document.
+IS_TRANS:   Arabic pronunciation
+INDEX:      Number after P show, sentence index and number after w indicates word position
+OFFSETS:    It indicates the length and word index position in the document.
 ```
 
 
 ## Stage 1: Preprocess the data:
 ```
-Min sentence size: 7 
-Max sentence size: 134 
-Avg sentence size: 4.774033885398819
-Total number of sentence to train: 5253
+Vocabulary Size   : 10612
+Min sentence size : 7 
+Max sentence size : 134 
+Avg sentence size : 4.774033885398819
+Sentence count    : 5253
 ```
 ### Construct sentence structure.
 
@@ -44,7 +45,7 @@ Read all the files and construct a sentence structure and associated word inform
 camel tool: https://github.com/CAMeL-Lab/camel_tools
 
 
-#### Sample out from camel_morphology analyze 
+#### Sample out from camel_morphology analyzer
 
 ```                          
 الولايات
@@ -81,14 +82,23 @@ diac:الوِلاياتُ lex:وِلايات_1 caphi:2_a_l_w_i_l_aa_y_aa_t_u glo
 Evaluation.
 
 ```
-Tag         pos   gen   num   cas   mod   asp     per   vox   stt   prc0  prc1  prc2  prc3  enc0  form_gen  form_num   stemcat
-CamelParser 96.78 99.41 99.43 92.68 99.13 99.27   99.23 99.08 97.54 99.67 99.63 99.59 99.90 99.61 -         -           -
-LSTM        96.00 99.36 99.21 87.30 100   99.78   99.99 100   96.88 99.81 99.23 99.23 99.19 99.10 99.34     99.34       96.23
+Tag             pos   gen   num   cas   mod   asp     per   vox   stt   prc0  prc1  prc2  prc3  enc0    Avg)
+JoinPrediction  97.21 99.50 99.59 94.76 99.41 99.44   99.47 99.25 98.24 99.71 99.81 99.73 99.96 99.71   98.99
+CamelParser     96.78 99.41 99.43 92.68 99.13 99.27   99.23 99.08 97.54 99.67 99.63 99.59 99.90 99.61   98.64
+LSTM            96.00 99.36 99.21 87.30 100   99.78   99.99 100   96.88 99.81 99.23 99.23 99.19 99.10   98.22
+NO-LSTM         95.69 98.62 98.80 86.42 100   99.78   99.99 100   95.05 99.11 99.12 99.12 99.12 99.12   97.85
+
 ```
 
+##The result shows
 
+### Case category
+### Nominative Case
+The nominative case is the case used for a noun or pronoun which is the subject of a verb. For example (nominative case shaded):
 
+### Accusative Case
+The accusative case's main function is to show the direct object of a verb.
 
-
-
+### Genitive Case
+The genitive case is predominantly used for showing possession. With nouns, it is usually created by adding 's to the word or by preceding it with "of."
 
